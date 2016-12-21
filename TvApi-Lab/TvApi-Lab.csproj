@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -115,12 +123,29 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="DAL\Movie.cs" />
+    <Compile Include="DAL\Review.cs" />
+    <Compile Include="DAL\TvApiContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Movie.cs" />
+    <Compile Include="Migrations\201612191740421_Movie.cs" />
+    <Compile Include="Migrations\201612191740421_Movie.Designer.cs">
+      <DependentUpon>201612191740421_Movie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612191829426_Review.cs" />
+    <Compile Include="Migrations\201612191829426_Review.Designer.cs">
+      <DependentUpon>201612191829426_Review.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\MovieRequest.cs" />
+    <Compile Include="Models\MovieResponse.cs" />
+    <Compile Include="Models\ReviewRequest.cs" />
+    <Compile Include="Models\ReviewResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MovieSerivce.cs" />
+    <Compile Include="Services\ReviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -133,6 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612191740421_Movie.resx">
+      <DependentUpon>201612191740421_Movie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191829426_Review.resx">
+      <DependentUpon>201612191829426_Review.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

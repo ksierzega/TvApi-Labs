@@ -2,71 +2,76 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TvApi_Lab.DAL;
 using TvApi_Lab.Models;
 
 namespace TvApi_Lab.Services
 {
     public class MovieService
-    {
-        private static MovieService _instance;
-
-        public static MovieService Instance
+    {             
+        public MovieService()
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new MovieService();
-                }
+           
+        }
 
-                return _instance;
+        internal void Add(MovieRequest movie)
+        {
+            using(var ctx = new TvApiContext())
+            {
+                ctx.Movies.Add(new Movie()
+                {
+                    Title = movie.Title,
+                    Year = movie.Year
+                });
+                ctx.SaveChanges();
             }
         }
 
-        private List<Movie> _movies;
-
-        public MovieService()
+        internal MovieResponse Find(int id)
         {
-            _movies = new List<Movie>()
+            using (var ctx = new TvApiContext())
             {
-                new Movie
+                var movie = ctx.Movies.Find(id);
+                if(movie == null)
                 {
-                    Author = "Jan Kowalski",
-                    Title ="Super historia",
-                    Year = 2033,
-                    Id =1,
-                    Comments = new List<string> { "super", "mega" },
-                },
-                new Movie
-                {
-                    Id = 2 ,
-                    Author ="Mario Men",
-                    Title="Super film",
-                    Year = 1999,
-                    Comments = new List<string>(),
+                    return null;
                 }
-            };
+
+                return new MovieResponse()
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year
+                };
+            }
         }
 
-        internal void Add(Movie movie)
+        internal IEnumerable<MovieResponse> GetAllMovies()
         {
-            _movies.Add(movie);
-        }
-
-        internal Movie Find(int id)
-        {
-            return _movies.SingleOrDefault(movie => movie.Id == id);
-        }
-
-        internal IEnumerable<Movie> GetAllMovies()
-        {
-            return _movies;
+            using (var ctx = new TvApiContext())
+            {
+                return ctx.Movies.Select(movie => new MovieResponse()
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Year = movie.Year
+                }).ToList();
+            }
         }
 
         internal void Delete(int id)
         {
-            Movie movie = Find(id);
-            _movies.Remove(movie);
+            using (var ctx = new TvApiContext())
+            {
+                var movie = ctx.Movies.Find(id);
+                if(movie == null)
+                {
+                    return;
+                }
+
+                ctx.Movies.Remove(movie);
+                ctx.SaveChanges();
+            }
         }
     }
 }

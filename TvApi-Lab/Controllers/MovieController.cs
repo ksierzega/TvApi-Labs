@@ -14,7 +14,7 @@ namespace TvApi_Lab.Controllers
 
         public MovieController()
         {
-            _movieService = MovieService.Instance;
+            _movieService = new MovieService();
         }
 
         [HttpGet, Route("movies")]
@@ -24,7 +24,7 @@ namespace TvApi_Lab.Controllers
         }
 
         [HttpPost, Route("movies")]
-        public IHttpActionResult AddMovie([FromBody]Movie movie)
+        public IHttpActionResult AddMovie([FromBody]MovieRequest movie)
         {
             if (!ModelState.IsValid)
             {

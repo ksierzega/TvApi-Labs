@@ -7,10 +7,11 @@ using System.Web;
 namespace TvApi_Lab.Models
 {
     public class MovieRequest
-    {       
+    {
         [Required]
         public string Title { get; set; }
-        
-        public int Year { get; set; }      
+
+        [Range(1888, int.MaxValue, ErrorMessage = "Year is incorrect!")]
+        public int Year { get; set; }
     }
 }

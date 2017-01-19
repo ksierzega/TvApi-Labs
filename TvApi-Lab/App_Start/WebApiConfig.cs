@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace TvApi_Lab
@@ -19,6 +21,10 @@ namespace TvApi_Lab
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(
+                new QueryStringMapping("format", "json",
+                    new MediaTypeHeaderValue("application/json")));
         }
     }
 }

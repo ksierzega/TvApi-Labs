@@ -84,6 +84,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -118,15 +122,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\TvApiException.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="DAL\Movie.cs" />
     <Compile Include="DAL\Review.cs" />
     <Compile Include="DAL\TvApiContext.cs" />
+    <Compile Include="Filters\ExecutionTimeAttribute.cs" />
+    <Compile Include="Filters\ModelValidationAttribute.cs" />
+    <Compile Include="Filters\TvApiExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

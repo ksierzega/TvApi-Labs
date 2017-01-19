@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using TvApi_Lab.Filters;
 using TvApi_Lab.Models;
 using TvApi_Lab.Services;
 
@@ -17,22 +19,19 @@ namespace TvApi_Lab.Controllers
             _movieService = new MovieService();
         }
 
+        [ExecutionTime]
         [HttpGet, Route("movies")]
         public IHttpActionResult GetAllMovies()
         {
-            return Ok(_movieService.GetAllMovies());
+            var movies = _movieService.GetAllMovies();
+            return Ok(movies);
         }
 
+        [ModelValidation]
         [HttpPost, Route("movies")]
         public IHttpActionResult AddMovie([FromBody]MovieRequest movie)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             _movieService.Add(movie);
-
             return Ok("added");
         }
 
